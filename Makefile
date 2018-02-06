@@ -20,7 +20,7 @@ FT_DYNAMIC = ${FT_SRC} ft_dynamic.o
 
 .PHONY : all clean
 
-TARGETS = buffer_example static_example dynamic_example mutex_example libpthread_preload.so mutex_ft2csv heapstat_example libheapstat_preload.so heapstat_ft2csv
+TARGETS = buffer_example static_example dynamic_example mutex_example libft.a libpthread_preload.so mutex_ft2csv heapstat_example libheapstat_preload.so heapstat_ft2csv
 
 all: ${TARGETS}
 
@@ -33,6 +33,9 @@ mutex_example: mutex_example.o
 
 heapstat_example: heapstat_example.o
 	${CC} ${LDFLAGS} -o $@ $^
+
+libft.a: ${FT_STATIC}
+	ar rcs libft.a ${FT_STATIC}
 
 libso.so: example_lib.o
 	${CC} ${LDFLAGS} -shared -T feather-trace.ld.S -o libso.so example_lib.o
