@@ -6,7 +6,7 @@ ARCH ?= ${host-arch}
 
 flags-i386     = -m32 -fPIC
 flags-x86_64   = -m64 -fPIC
-CFLAGS  = ${flags-${ARCH}} -Wall -Wextra -Werror -g -Iinclude/
+CFLAGS  = ${flags-${ARCH}} -Wall -Wextra -Werror -g -O3 -Iinclude/
 LDFLAGS = ${flags-${ARCH}} -ldl
 
 vpath %.h include/

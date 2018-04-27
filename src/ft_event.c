@@ -53,6 +53,29 @@ int ft_enable_event_in_table(unsigned long id,
 	return count;
 }
 
+int ft_enable_matching_events_in_table(unsigned long mask,
+			     struct trace_event* te, /* start of table */
+			     struct trace_event* stop) {
+	int count = 0;
+	char* delta;
+	unsigned char* instr;
+
+	while (te < stop) {
+		if ((te->id & mask) != 0 && ++te->count == 1) {
+			instr  = (unsigned char*) te->start_addr;
+			/* make sure we don't clobber something that doesn't look like a jump */
+			if (*instr == BYTE_JUMP) {
+				delta  = (((char*) te->start_addr) + 1);
+				*delta = 0;
+			}
+		}
+		if ((te->id & mask) != 0)
+			count++;
+		te++;
+	}
+	return count;
+}
+
 int ft_disable_all_events_in_table(struct trace_event* te, /* start of table */
 				   struct trace_event* stop)
 {
@@ -101,6 +124,29 @@ int ft_disable_event_in_table(unsigned long id,
 	return count;
 }
 
+int ft_disable_matching_events_in_table(unsigned long mask,
+			     struct trace_event* te, /* start of table */
+			     struct trace_event* stop) {
+	int count = 0;
+	char* delta;
+	unsigned char* instr;
+
+	while (te < stop) {
+		if ((te->id & mask) != 0 && ++te->count == 1) {
+			instr  = (unsigned char*) te->start_addr;
+			/* make sure we don't clobber something that doesn't look like a jump */
+			if (*instr == BYTE_JUMP) {
+				delta  = (((char*) te->start_addr) + 1);
+				*delta = te->end_addr - te->start_addr -
+					BYTE_JUMP_LEN;
+			}
+		}
+		if ((te->id & mask) != 0)
+			count++;
+		te++;
+	}
+	return count;
+}
 
 int ft_is_event_enabled_in_table(unsigned long id,
 				 struct trace_event* te, /* start of table */

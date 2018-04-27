@@ -96,6 +96,10 @@ int ft_enable_event(unsigned long id)
 	return for_each_table_id(id, ft_enable_event_in_table);
 }
 
+int ft_enable_matching_events(unsigned long mask) {
+	return for_each_table_id(mask, ft_enable_matching_events_in_table);
+}
+
 int ft_disable_all_events(void)
 {
 	return for_each_table(ft_disable_all_events_in_table);
@@ -104,6 +108,10 @@ int ft_disable_all_events(void)
 int ft_disable_event(unsigned long id)
 {
 	return for_each_table_id(id, ft_disable_event_in_table);
+}
+
+int ft_disable_matching_events(unsigned long mask) {
+	return for_each_table_id(mask, ft_disable_matching_events_in_table);
 }
 
 int ft_is_event_enabled(unsigned long id)

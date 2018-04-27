@@ -39,6 +39,12 @@ int ft_enable_event(unsigned long id)
 					__stop___event_table);
 }
 
+int ft_enable_matching_events(unsigned long mask) {
+	return ft_enable_matching_events_in_table(mask,
+					 __start___event_table,
+					 __stop___event_table);
+}
+
 int ft_disable_all_events(void)
 {
 	return ft_disable_all_events_in_table(__start___event_table,
@@ -52,12 +58,20 @@ int ft_disable_event(unsigned long id)
 					 __stop___event_table);
 }
 
+int ft_disable_matching_events(unsigned long mask) {
+	return ft_disable_matching_events_in_table(mask,
+					 __start___event_table,
+					 __stop___event_table);
+}
+
 int ft_is_event_enabled(unsigned long id)
 {
 	return ft_is_event_enabled_in_table(id,
 					 __start___event_table,
 					 __stop___event_table);
 }
+
+
 
 int init_ft_events(void)
 {

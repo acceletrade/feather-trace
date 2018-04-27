@@ -47,4 +47,12 @@ int ft_enable_event_in_table(unsigned long id,
 			     struct trace_event* te, /* start of table */
 			     struct trace_event* stop);
 
+int ft_enable_matching_events_in_table(unsigned long mask,
+			     struct trace_event* te, /* start of table */
+			     struct trace_event* stop);
+
+int ft_disable_matching_events_in_table(unsigned long mask,
+			     struct trace_event* te, /* start of table */
+			     struct trace_event* stop);
+
 #endif

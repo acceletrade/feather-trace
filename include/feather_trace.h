@@ -42,4 +42,7 @@ int ft_disable_all_events(void);
 int ft_disable_event(unsigned long id);
 int ft_is_event_enabled(unsigned long id);
 
+int ft_enable_matching_events(unsigned long mask);
+int ft_disable_matching_events(unsigned long mask);
+
 #endif
