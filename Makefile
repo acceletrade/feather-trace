@@ -29,7 +29,7 @@ static_example: ${FT_STATIC}  static_example.o
 buffer_example:  ${FT_STATIC}  buffer_example.o
 
 mutex_example: mutex_example.o
-	${CC} ${LDFLAGS} -lpthread -o mutex_example mutex_example.o
+	${CC} ${LDFLAGS} -pthread -o mutex_example mutex_example.o
 
 heapstat_example: heapstat_example.o
 	${CC} ${LDFLAGS} -o $@ $^
@@ -41,7 +41,7 @@ libso.so: example_lib.o
 	${CC} ${LDFLAGS} -shared -T feather-trace.ld.S -o libso.so example_lib.o
 
 dynamic_example:  ${FT_DYNAMIC}  dynamic_example.o libso.so
-	${CC} ${LDFLAGS} -L. -o dynamic_example -lso -ldl  ${FT_DYNAMIC} dynamic_example.o
+	${CC} ${LDFLAGS} -Wl,--no-as-needed -L. -o dynamic_example -lso -ldl  ${FT_DYNAMIC} dynamic_example.o
 
 libpthread_preload.so: pthread_preload.o ${FT_STATIC} libft_saved.so
 	${CC} ${LDFLAGS} -L. -lft_saved -shared -T feather-trace.ld.S -o libpthread_preload.so pthread_preload.o ${FT_STATIC}

@@ -54,7 +54,8 @@ static void save_daemon_thread(struct daemon_config* cfg)
 	while (!cfg->stop) {
 		sleep(1);
 		while (ft_buffer_read(cfg->src, buf)) {
-			write(cfg->fd, buf, size);
+			int _ = write(cfg->fd, buf, size);
+			(void)_;
 		}
 	}
 	close(cfg->fd);
